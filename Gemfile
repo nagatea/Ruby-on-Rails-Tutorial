@@ -31,6 +31,11 @@ gem 'jbuilder', '2.7.0'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '3.1.11'
+# Use Faker for generating fake data
+gem 'faker', '1.7.3'
+# Use will_paginate for pagination
+gem 'will_paginate', '3.1.6'
+gem 'bootstrap-will_paginate', '1.0.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
