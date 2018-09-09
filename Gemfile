@@ -36,6 +36,9 @@ gem 'faker', '1.7.3'
 # Use will_paginate for pagination
 gem 'will_paginate', '3.1.6'
 gem 'bootstrap-will_paginate', '1.0.0'
+# Use carrierwave to uploading picture
+gem 'carrierwave', '1.2.2'
+gem 'mini_magick', '4.7.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -66,6 +69,7 @@ end
 
 group :production do
   gem 'pg', '0.20.0'
+  gem 'fog', '1.42'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
