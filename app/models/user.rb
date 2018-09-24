@@ -41,4 +41,16 @@ class User < ApplicationRecord
   def followed_by?(other_user)
     followers.include?(other_user)
   end
+
+  def favorite(micropost)
+    favorite_microposts << micropost
+  end
+
+  def unfavorite(micropost)
+    favorite_relationships.find_by(micropost_id: micropost.id).destroy
+  end
+
+  def favorite?(micropost)
+    favorite_microposts.include?(micropost)
+  end
 end
