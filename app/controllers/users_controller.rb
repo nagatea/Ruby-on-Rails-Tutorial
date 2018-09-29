@@ -61,6 +61,13 @@ class UsersController < ApplicationController
     render 'show_follow'
   end
 
+  def favorites
+    @title = "Favorites"
+    @user = User.find(params[:id])
+    @feed_items = @user.favorite_microposts.paginate(page: params[:page])
+    render 'show_favorite'
+  end
+
   private
 
     def user_params
