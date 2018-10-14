@@ -1,0 +1,6 @@
+<div id="favorite_form-<%= micropost.id %>">
+  <%= form_for(current_user.favorite_relationships.build, remote: true) do |f| %>
+    <div><%= hidden_field_tag :micropost_id, micropost.id %></div>
+    <%= f.submit pluralize(micropost.favorite_users.count, 'like'), class: "non-favorite" %>
+  <% end %>
+</div>
