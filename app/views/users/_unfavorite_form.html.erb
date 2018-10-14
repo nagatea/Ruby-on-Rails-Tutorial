@@ -1,5 +1,5 @@
 <div id="favorite_form-<%= micropost.id %>">
   <%= form_for(current_user.favorite_relationships.find_by(micropost_id: micropost.id), html: { method: :delete }, remote: true) do |f| %>
-    <%= f.submit pluralize(micropost.favorite_users.count, 'like'), class: "favorite" %>
+    <%= f.submit pluralize(micropost.favorite_count, 'like'), class: "favorite" %>
   <% end %>
 </div>

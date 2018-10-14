@@ -23,7 +23,7 @@ class User < ApplicationRecord
 
   def feed
     following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
-    Micropost.created_desc.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
+    Micropost.created_desc.where("microposts.user_id IN (#{following_ids}) OR microposts.user_id = :user_id", user_id: id).joins("LEFT JOIN favorite_relationships ON microposts.id = favorite_relationships.micropost_id").group("microposts.id").select("microposts.*, COUNT(favorite_relationships.id) AS favorite_count")
   end
 
   def follow(other_user)
