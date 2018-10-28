@@ -12,9 +12,9 @@ class FavoriteRelationshipsController < ApplicationController
   end
 
   def destroy
-    @micropost = FavoriteRelationship.select("microposts.*, COUNT(favorite_relationships.id) AS favorite_count").joins("LEFT JOIN microposts ON microposts.id = favorite_relationships.micropost_id").group("favorite_relationships.id").find(params[:id])
-    current_user.unfavorite(@micropost)
-    @micropost.favorite_count -= 1
+    unfavorite_micropost = FavoriteRelationship.find(params[:id]).micropost
+    current_user.unfavorite(unfavorite_micropost)
+    @micropost = Micropost.select("microposts.*, COUNT(favorite_relationships.id) AS favorite_count").joins("LEFT JOIN favorite_relationships ON microposts.id = favorite_relationships.micropost_id").group("microposts.id").where("microposts.id = ?", unfavorite_micropost.id).first
     respond_to do |format|
       format.html { redirect_to root_path }
       format.js
