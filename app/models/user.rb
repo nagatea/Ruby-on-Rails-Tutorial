@@ -22,10 +22,8 @@ class User < ApplicationRecord
   end
 
   def feed
-    user_id = id.to_i
-    query = "SELECT microposts.*, COUNT(favorite_relationships.id) AS 'favorite_count' FROM microposts LEFT JOIN favorite_relationships ON microposts.id = favorite_relationships.micropost_id WHERE microposts.user_id IN (SELECT followed_id FROM relationships WHERE follower_id = #{user_id}) OR microposts.user_id = #{user_id} GROUP BY microposts.id ORDER BY microposts.created_at DESC"
-    #query = "LEFT JOIN favorite_relationships ON microposts.id = favorite_relationships.micropost_id WHERE microposts.user_id IN (SELECT followed_id FROM relationships WHERE follower_id = #{user_id}) OR microposts.user_id = #{user_id} GROUP BY microposts.id ORDER BY microposts.created_at DESC"
-    #Micropost.select("microposts.*, COUNT(favorite_relationships.id) as favorite_count").joins(query)
+    following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
+    Micropost.created_desc.where("microposts.user_id IN (#{following_ids}) OR microposts.user_id = :user_id", user_id: id).joins("LEFT JOIN favorite_relationships ON microposts.id = favorite_relationships.micropost_id").group("microposts.id").select("microposts.*, COUNT(favorite_relationships.id) AS favorite_count")
   end
 
   def follow(other_user)
