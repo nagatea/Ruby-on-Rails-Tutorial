@@ -105,4 +105,15 @@ class UserTest < ActiveSupport::TestCase
       assert_not michael.feed.include?(post_unfollowed)
     end
   end
+
+  test "should favorite and unfavorite a micropost" do
+    michael = users(:michael)
+    orange = microposts(:orange)
+    assert_not michael.favorite?(orange)
+    michael.favorite(orange)
+    assert michael.favorite?(orange)
+    assert orange.favorite_users.include?(michael)
+    michael.unfavorite(orange)
+    assert_not michael.favorite?(orange)
+  end
 end

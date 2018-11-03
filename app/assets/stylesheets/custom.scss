@@ -241,6 +241,14 @@ input {
       padding: 5px 0;
     }
   }
+  .favorite {
+    color: #e0245e;
+    width: 75px;
+  }
+  .non-favorite {
+    color: #657786;
+    width: 75px;
+  }
   .timestamp {
     color: $gray-light;
     display: block;

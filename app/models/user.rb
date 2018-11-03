@@ -22,8 +22,15 @@ class User < ApplicationRecord
   end
 
   def feed
-    following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
-    Micropost.created_desc.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
+    relationships = Relationship.arel_table
+    microposts = Micropost.arel_table
+    favorite_relationships = FavoriteRelationship.arel_table
+    follower = relationships.project(relationships[:followed_id]).where(relationships[:follower_id].eq(id))
+    microposts.project(microposts[Arel.star], favorite_relationships[:id].count.as('favorite_count'))
+      .where(microposts[:user_id].in(follower).or(microposts[:user_id].eq(id)))
+      .outer_join(favorite_relationships).on(microposts[:id].eq(favorite_relationships[:micropost_id]))
+      .group(microposts[:id])
+      .order(microposts[:created_at].desc)
   end
 
   def follow(other_user)
@@ -40,5 +47,17 @@ class User < ApplicationRecord
 
   def followed_by?(other_user)
     followers.include?(other_user)
+  end
+
+  def favorite(micropost)
+    favorite_microposts << micropost
+  end
+
+  def unfavorite(micropost)
+    favorite_relationships.find_by(micropost_id: micropost.id).destroy
+  end
+
+  def favorite?(micropost)
+    favorite_microposts.include?(micropost)
   end
 end

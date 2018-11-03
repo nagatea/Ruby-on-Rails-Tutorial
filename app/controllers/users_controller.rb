@@ -13,7 +13,14 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @microposts = @user.microposts.paginate(page: params[:page])
+    microposts = Micropost.arel_table
+    favorite_relationships = FavoriteRelationship.arel_table
+    query = microposts.project(microposts[Arel.star], favorite_relationships[:id].count.as('favorite_count'))
+              .outer_join(favorite_relationships).on(microposts[:id].eq(favorite_relationships[:micropost_id]))
+              .where(microposts[:user_id].eq(@user.id))
+              .group(microposts[:id])
+              .order(microposts[:created_at].desc)
+    @microposts = Micropost.paginate_by_sql(query.to_sql, page: params[:page])
   end
 
   def create
@@ -59,6 +66,20 @@ class UsersController < ApplicationController
     @user  = User.find(params[:id])
     @follow_users = @user.followers.paginate(page: params[:page])
     render 'show_follow'
+  end
+
+  def favorites
+    @title = "Favorites"
+    @user = User.find(params[:id])
+    microposts = Micropost.arel_table
+    favorite_relationships = FavoriteRelationship.arel_table
+    query = microposts.project(microposts[Arel.star], favorite_relationships[:id].count.as('favorite_count'))
+              .outer_join(favorite_relationships).on(microposts[:id].eq(favorite_relationships[:micropost_id]))
+              .where(favorite_relationships[:user_id].eq(@user.id))
+              .group(microposts[:id])
+              .order(microposts[:created_at].desc)
+    @feed_items = Micropost.paginate_by_sql(query.to_sql, page: params[:page])
+    render 'show_favorite'
   end
 
   private
