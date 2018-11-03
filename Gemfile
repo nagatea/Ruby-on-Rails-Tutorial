@@ -43,6 +43,9 @@ gem 'mini_magick', '4.7.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Use webpack for rails
+gem 'webpacker'
+
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3', '1.3.13'
@@ -65,6 +68,7 @@ group :test do
   gem 'minitest-reporters', '1.1.14'
   gem 'guard', '2.13.0'
   gem 'guard-minitest', '2.4.4'
+  gem 'loofah', '>= 2.2.3'
 end
 
 group :production do
