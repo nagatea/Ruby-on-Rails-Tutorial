@@ -9,10 +9,18 @@
 
 import Vue from 'vue/dist/vue.esm'
 import App from '../app.vue'
+import Home from '../components/Home.vue'
 
 new Vue({
   el: '#app',
   components: { 
     App
    }
+})
+
+new Vue({
+  el: '#home',
+  components: {
+    Home
+  }
 })

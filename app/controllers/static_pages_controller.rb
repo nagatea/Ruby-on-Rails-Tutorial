@@ -4,6 +4,11 @@ class StaticPagesController < ApplicationController
       @user = current_user
       @micropost = current_user.microposts.build
       @feed_items = Micropost.paginate_by_sql(@user.feed.to_sql, page: params[:page])
+      res = {currentUser: @user, micropostCount: @user.microposts.count, feedItems: @feed_items}.to_json
+    end
+    respond_to do |format|
+      format.html
+      format.json { render :json => res }
     end
   end
 
