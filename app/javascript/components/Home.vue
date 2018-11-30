@@ -3,10 +3,18 @@
     <div class="row">
       <aside class="col-md-4">
         <section class="user_info">
-          <user-info :user="data.currentUser" :micropost-count="data.micropostCount" />
+          <user-info 
+            :user="data.currentUser"
+            :micropost-count="data.micropostCount"
+          />
         </section>
         <section class="stats">
-          <!--<%= render 'shared/stats' %>-->
+          <stats 
+            :user="data.currentUser"
+            :following-count="data.followingCount"
+            :followers-count="data.followersCount"
+            :favorites-count="data.favoritesCount"
+          />
         </section>
         <section class="micropost_form">
           <!--<%= render 'shared/micropost_form' %>-->
@@ -23,19 +31,24 @@
 
 <script>
 import UserInfo from './shared/UserInfo.vue'
+import Stats from './shared/Stats.vue'
 import axios from 'axios'
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
 
 export default {
   name: 'Home',
   components: {
-    UserInfo
+    UserInfo,
+    Stats
   },
   data () {
     return {
       data: {
-        user: {name: 'loading'},
-        micropostCount: 0
+        user: {},
+        micropostCount: 0,
+        followingCount: 0,
+        followersCount: 0,
+        favoritesCount: 0
       }
     }
   },
