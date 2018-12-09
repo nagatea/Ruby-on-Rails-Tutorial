@@ -25,7 +25,6 @@
         <Feed 
           :current-user="data.currentUser"
           :feed-items="data.feedItems"
-          :is-favorite-items="data.isFavoriteItems"
         />
       </div>
     </div>
@@ -55,8 +54,7 @@ export default {
         followingCount: 0,
         followersCount: 0,
         favoritesCount: 0,
-        feedItems: [],
-        isFavoriteItems: [],
+        feedItems: []
       }
     }
   },

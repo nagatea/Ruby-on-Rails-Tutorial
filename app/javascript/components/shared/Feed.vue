@@ -49,10 +49,7 @@ export default {
       return timeAgo.format(new Date(date))
     },
     isFavorite (micropost) {
-      let tmp = this.isFavoriteItems.find(function (item) {
-        return item.id === micropost.id
-      })
-      return tmp.is_favorite === 1
+      return micropost.is_favorite === 1
     }
   }
 }
