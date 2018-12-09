@@ -17,7 +17,10 @@
           />
         </section>
         <section class="micropost_form">
-          <!--<%= render 'shared/micropost_form' %>-->
+          <micropost-form
+            :user="data.currentUser"
+            @add-micropost="addMicropost($event)"
+          />
         </section>
       </aside>
       <div class="col-md-8">
@@ -37,13 +40,15 @@
 import UserInfo from './shared/UserInfo.vue'
 import Stats from './shared/Stats.vue'
 import Feed from './shared/Feed.vue'
+import MicropostForm from './shared/MicropostForm.vue'
 
 export default {
   name: 'Home',
   components: {
     UserInfo,
     Stats,
-    Feed
+    Feed,
+    MicropostForm
   },
   data () {
     return {
@@ -65,6 +70,10 @@ export default {
   methods: {
     changeFavoriteCount (count) {
       this.data.favoritesCount = this.data.favoritesCount + count
+    },
+    addMicropost (micropost) {
+      this.data.feedItems.unshift(micropost)
+      this.data.micropostCount++
     }
   }
 }

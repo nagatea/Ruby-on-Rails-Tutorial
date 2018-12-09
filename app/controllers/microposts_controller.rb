@@ -6,7 +6,11 @@ class MicropostsController < ApplicationController
     @micropost = current_user.microposts.build(micropost_params)
     if @micropost.save
       flash[:success] = "Micropost created!"
-      redirect_to root_url
+      res = @micropost.to_json
+      respond_to do |format|
+        format.html { redirect_to root_url }
+        format.json { render :json => res }
+      end
     else
       @user = current_user
       @feed_items = []
