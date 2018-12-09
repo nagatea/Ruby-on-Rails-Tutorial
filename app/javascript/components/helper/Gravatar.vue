@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img :src="gravaterUrl(user)" :alt="user.name" class="gravatar">
+    <img :src="gravaterUrl(user, size)" :alt="user.name" class="gravatar">
   </div>
 </template>
 
@@ -13,13 +13,17 @@ export default {
     user: {
       type: Object,
       required: true
+    },
+    size: {
+      type: Number,
+      default: 80
     }
   },
   computed: {
     
   },
   methods: {
-    gravaterUrl (user, size = 80) {
+    gravaterUrl (user, size) {
       const gravatarId = this.createMD5Hash(this.user.email)
       const res = `https://secure.gravatar.com/avatar/${gravatarId}?s=${size}`
       return res

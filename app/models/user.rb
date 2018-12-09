@@ -25,10 +25,25 @@ class User < ApplicationRecord
     relationships = Relationship.arel_table
     microposts = Micropost.arel_table
     favorite_relationships = FavoriteRelationship.arel_table
+    fav = FavoriteRelationship.arel_table.alias('fav')
+    users = User.arel_table
     follower = relationships.project(relationships[:followed_id]).where(relationships[:follower_id].eq(id))
-    microposts.project(microposts[Arel.star], favorite_relationships[:id].count.as('favorite_count'))
+    microposts.project(microposts[Arel.star], favorite_relationships[:id].count.as('favorite_count'), users[:name].as('user_name'), users[:email].as('user_email'), users[:admin].as('user_admin'))
       .where(microposts[:user_id].in(follower).or(microposts[:user_id].eq(id)))
       .outer_join(favorite_relationships).on(microposts[:id].eq(favorite_relationships[:micropost_id]))
+      .join(users).on(microposts[:user_id].eq(users[:id]))
+      .group(microposts[:id])
+      .order(microposts[:created_at].desc)
+  end
+
+  def feed_is_favorite
+    relationships = Relationship.arel_table
+    microposts = Micropost.arel_table
+    favorite_relationships = FavoriteRelationship.arel_table
+    follower = relationships.project(relationships[:followed_id]).where(relationships[:follower_id].eq(id))
+    microposts.project(microposts[:id], favorite_relationships[:id].count.as('is_favorite'))
+      .where(microposts[:user_id].in(follower).or(microposts[:user_id].eq(id)))
+      .outer_join(favorite_relationships).on(favorite_relationships[:user_id].eq(id).and(favorite_relationships[:micropost_id].eq(microposts[:id])))
       .group(microposts[:id])
       .order(microposts[:created_at].desc)
   end

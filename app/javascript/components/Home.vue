@@ -22,7 +22,11 @@
       </aside>
       <div class="col-md-8">
         <h3>Micropost Feed</h3>
-        <!--<%= render 'shared/feed' %>-->
+        <Feed 
+          :current-user="data.currentUser"
+          :feed-items="data.feedItems"
+          :is-favorite-items="data.isFavoriteItems"
+        />
       </div>
     </div>
   </div>
@@ -32,6 +36,7 @@
 <script>
 import UserInfo from './shared/UserInfo.vue'
 import Stats from './shared/Stats.vue'
+import Feed from './shared/Feed.vue'
 import axios from 'axios'
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
 
@@ -39,7 +44,8 @@ export default {
   name: 'Home',
   components: {
     UserInfo,
-    Stats
+    Stats,
+    Feed
   },
   data () {
     return {
@@ -48,7 +54,9 @@ export default {
         micropostCount: 0,
         followingCount: 0,
         followersCount: 0,
-        favoritesCount: 0
+        favoritesCount: 0,
+        feedItems: [],
+        isFavoriteItems: [],
       }
     }
   },
