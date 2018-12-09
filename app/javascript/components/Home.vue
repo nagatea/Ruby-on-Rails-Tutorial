@@ -36,8 +36,6 @@
 import UserInfo from './shared/UserInfo.vue'
 import Stats from './shared/Stats.vue'
 import Feed from './shared/Feed.vue'
-import axios from 'axios'
-axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
 
 export default {
   name: 'Home',
@@ -59,7 +57,7 @@ export default {
     }
   },
   created () {
-    axios.get('').then(res => {
+    this.axios.get('').then(res => {
       this.data = res.data
     })
   }
