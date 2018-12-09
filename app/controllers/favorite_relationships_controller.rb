@@ -5,9 +5,13 @@ class FavoriteRelationshipsController < ApplicationController
     @micropost = Micropost.select("microposts.*, COUNT(favorite_relationships.id) AS favorite_count").joins("LEFT JOIN favorite_relationships ON microposts.id = favorite_relationships.micropost_id").group("microposts.id").find(params[:micropost_id])
     current_user.favorite(@micropost)
     @micropost.favorite_count += 1
+    id = FavoriteRelationship.last.id
+    res = {
+      favorite_relationships_id: id
+    }
     respond_to do |format|
       format.html { redirect_to root_path }
-      format.js
+      format.json { render :json => res }
     end
   end
 

@@ -25,6 +25,7 @@
         <Feed 
           :current-user="data.currentUser"
           :feed-items="data.feedItems"
+          @change-favorite-count="changeFavoriteCount($event)"
         />
       </div>
     </div>
@@ -60,6 +61,11 @@ export default {
     this.axios.get('').then(res => {
       this.data = res.data
     })
+  },
+  methods: {
+    changeFavoriteCount (count) {
+      this.data.favoritesCount = this.data.favoritesCount + count
+    }
   }
 }
 </script>

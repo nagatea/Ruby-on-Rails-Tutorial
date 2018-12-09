@@ -11,15 +11,13 @@
         </span>
         <span class="content">
           {{ micropost.content }}
-          <img v-if="micropost.picture" :src="micropost.picture.url">
+          <img v-if="micropost.picture" :src="`/uploads/micropost/picture/${micropost.id}/${micropost.picture}`">
         </span>
         <span class="timestamp">
-          <div v-if="isFavorite(micropost)">
-            あるよ～～
-          </div>
-          <div v-else>
-            ないよ～～
-          </div>
+          <favorite-form 
+            :micropost="micropost"
+            @change-favorite-count="$emit('change-favorite-count', $event)"
+          />
           Posted {{ timeAgoInWords(micropost.created_at) }}.
           <a v-if="currentUser.id === micropost.user_id" href='#'>delete</a>
         </span>
@@ -30,6 +28,7 @@
 
 <script>
 import Gravatar from '../helper/Gravatar.vue'
+import FavoriteForm from '../users/FavoriteForm.vue'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 TimeAgo.addLocale(en)
@@ -37,7 +36,8 @@ const timeAgo = new TimeAgo('en-US')
 export default {
   name: 'Feed',
   components: {
-    Gravatar
+    Gravatar,
+    FavoriteForm
   },
   props: {
     currentUser: Object,
@@ -47,9 +47,6 @@ export default {
   methods: {
     timeAgoInWords (date) {
       return timeAgo.format(new Date(date))
-    },
-    isFavorite (micropost) {
-      return micropost.is_favorite === 1
     }
   }
 }
