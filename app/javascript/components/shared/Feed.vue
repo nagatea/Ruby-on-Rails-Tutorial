@@ -19,7 +19,7 @@
             @change-favorite-count="$emit('change-favorite-count', $event)"
           />
           Posted {{ timeAgoInWords(micropost.created_at) }}.
-          <a v-if="currentUser.id === micropost.user_id" href='#'>delete</a>
+          <a v-if="currentUser.id === micropost.user_id" @click="removeMicropost(micropost)" href='#'>delete</a>
         </span>
       </li>
     </ol>
@@ -47,6 +47,15 @@ export default {
   methods: {
     timeAgoInWords (date) {
       return timeAgo.format(new Date(date))
+    },
+    removeMicropost (micropost) {
+      let result = confirm('You sure?')
+      if (!result) { return }
+      this.axios.delete('/microposts', {
+        params: { id: micropost.id }
+      }).then(res => {
+        this.feedItems = this.feedItems.filter(n => n.id !== micropost.id)
+      })
     }
   }
 }

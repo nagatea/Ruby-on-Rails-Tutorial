@@ -74,6 +74,9 @@ export default {
     addMicropost (micropost) {
       this.data.feedItems.unshift(micropost)
       this.data.micropostCount++
+    },
+    removeMicropost (micropost) {
+
     }
   }
 }
