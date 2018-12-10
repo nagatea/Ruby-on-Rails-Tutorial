@@ -1,5 +1,5 @@
 <template>
-  <div class="stats">
+  <div v-if="user" class="stats">
     <a :href="`/users/${user.id}/following`">
       <strong id="following" class="stat">
         {{ followingCount }}

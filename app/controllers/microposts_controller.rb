@@ -5,7 +5,6 @@ class MicropostsController < ApplicationController
   def create
     @micropost = current_user.microposts.build(micropost_params)
     if @micropost.save
-      flash[:success] = "Micropost created!"
       res = @micropost.to_json
       respond_to do |format|
         format.html { redirect_to root_url }
@@ -21,7 +20,6 @@ class MicropostsController < ApplicationController
   def destroy
     micropost = Micropost.find(params[:id])
     micropost.destroy
-    flash[:success] = "Micropost deleted"
     redirect_back(fallback_location: root_url)
   end
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="user">
     <garvatar :user="user" />
     <h1>{{ user.name }}</h1>
     <a :href="`./users/${user.id}`">view my profile</a>
@@ -16,10 +16,7 @@ export default {
     Garvatar
   },
   props: {
-    user: {
-      type: Object,
-      required: true
-    },
+    user: Object,
     micropostCount: Number
   }
 }
