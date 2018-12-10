@@ -50,6 +50,9 @@ export default {
           let result = res.data
           this.micropost.id = result.id
           this.micropost.content = result.content
+          if (this.picture) {
+            this.micropost.picture = result.picture.url.match(/\d\/(.+)/i)[1]
+          }
           this.micropost.user_id = this.user.id
           this.micropost.created_at = result.created_at
           this.micropost.updated_at = result.updated_at
@@ -61,6 +64,7 @@ export default {
         .then((res) => {
           this.content = ''
           this.picture = null
+          document.getElementById('micropost_picture').value = ''
         })
     },
     postPicture () {

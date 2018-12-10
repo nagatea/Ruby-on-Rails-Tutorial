@@ -29,6 +29,7 @@
           :current-user="data.currentUser"
           :feed-items="data.feedItems"
           @change-favorite-count="changeFavoriteCount($event)"
+          @remove-micropost="removeMicropost($event)"
         />
       </div>
     </div>
@@ -76,7 +77,8 @@ export default {
       this.data.micropostCount++
     },
     removeMicropost (micropost) {
-
+      this.data.feedItems = this.data.feedItems.filter(item => item.id !== micropost.id)
+      this.data.micropostCount--
     }
   }
 }
