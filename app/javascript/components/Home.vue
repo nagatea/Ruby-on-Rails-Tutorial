@@ -64,7 +64,7 @@ export default {
     }
   },
   created () {
-    this.axios.get('').then(res => {
+    this.axios.get('/?req=ajax').then(res => {
       this.data = res.data
     })
   },

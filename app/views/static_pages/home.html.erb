@@ -2,7 +2,7 @@
   <div id="home">
     <home />
   </div>
-  <div style="max-width: 600px; margin: 0 auto;">
+  <div class="paginate">
     <% if @feed_items.any? %>
       <%= will_paginate @feed_items %>
     <% end %>

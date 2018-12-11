@@ -17,13 +17,6 @@ axios.defaults.headers['X-CSRF-TOKEN'] = document.querySelector('meta[name=csrf-
 Vue.use(VueAxios, axios)
 
 new Vue({
-  el: '#app',
-  components: { 
-    App
-   }
-})
-
-new Vue({
   el: '#home',
   components: {
     Home
