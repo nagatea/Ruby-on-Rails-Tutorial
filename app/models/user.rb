@@ -28,7 +28,7 @@ class User < ApplicationRecord
     fav = FavoriteRelationship.arel_table.alias('fav')
     users = User.arel_table
     follower = relationships.project(relationships[:followed_id]).where(relationships[:follower_id].eq(id))
-    microposts.project(microposts[Arel.star], favorite_relationships[:id].count.as('favorite_count'), users[:name].as('user_name'), users[:email].as('user_email'), users[:admin].as('user_admin'))
+    microposts.project(microposts[Arel.star], favorite_relationships[:id].count.as('favorite_count'), users[:name].maximum.as('user_name'), users[:email].maximum.as('user_email'))
       .where(microposts[:user_id].in(follower).or(microposts[:user_id].eq(id)))
       .outer_join(favorite_relationships).on(microposts[:id].eq(favorite_relationships[:micropost_id]))
       .join(users).on(microposts[:user_id].eq(users[:id]))
@@ -41,7 +41,7 @@ class User < ApplicationRecord
     microposts = Micropost.arel_table
     favorite_relationships = FavoriteRelationship.arel_table
     follower = relationships.project(relationships[:followed_id]).where(relationships[:follower_id].eq(id))
-    microposts.project(microposts[:id], favorite_relationships[:id].count.as('is_favorite'), favorite_relationships[:id].as('favorite_relationships_id'))
+    microposts.project(microposts[:id], favorite_relationships[:id].count.as('is_favorite'), favorite_relationships[:id].maximum.as('favorite_relationships_id'))
       .where(microposts[:user_id].in(follower).or(microposts[:user_id].eq(id)))
       .outer_join(favorite_relationships).on(favorite_relationships[:user_id].eq(id).and(favorite_relationships[:micropost_id].eq(microposts[:id])))
       .group(microposts[:id])
