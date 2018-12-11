@@ -3,7 +3,8 @@
     <div class='field'>
       <textarea v-model="content" placeholder='Compose new micropost...' name='micropost[content]' id='micropost_content'></textarea>
     </div>
-    <input type='button' name='commit' value='Post' class='btn btn-primary' data-disable-with='Post' @click='createMicropost'>
+    <input v-if="content" type='button' name='commit' value='Post' class='btn btn-primary' data-disable-with='Post' @click='createMicropost'>
+    <input v-else type='button' name='commit' value='Post' class='btn' data-disable-with='Post'>
     <span class='picture'>
       <input accept='image/jpeg,image/gif,image/png' type='file' name='micropost[picture]' id='micropost_picture' ref='picture' @change="postPicture">
     </span>
@@ -64,6 +65,8 @@ export default {
         .then((res) => {
           this.content = ''
           this.picture = null
+          this.micropost.content = ''
+          this.micropost.picture = null
           document.getElementById('micropost_picture').value = ''
         })
     },
