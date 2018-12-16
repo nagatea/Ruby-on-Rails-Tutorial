@@ -15,24 +15,22 @@ export default {
     }
   },
   methods: {
-    favorite () {
-      this.axios.post('/favorite_relationships', {
+    async favorite () {
+      let res = await this.axios.post('/favorite_relationships', {
         micropost_id: this.micropost.id
-      }).then(res => {
-        this.micropost.favorite_count++
-        this.micropost.is_favorite = 1
-        this.micropost.favorite_relationships_id = res.data.favorite_relationships_id
-        this.$emit('change-favorite-count', 1)
       })
+      this.micropost.favorite_relationships_id = res.data.favorite_relationships_id
+      this.micropost.favorite_count++
+      this.micropost.is_favorite = 1
+      this.$emit('change-favorite-count', 1)
     },
-    unfavorite () {
-      this.axios.delete('/favorite_relationships', {
+    async unfavorite () {
+      await this.axios.delete('/favorite_relationships', {
         params: { id: this.micropost.favorite_relationships_id }
-      }).then(res => {  
-        this.micropost.favorite_count--
-        this.micropost.is_favorite = 0
-        this.$emit('change-favorite-count', -1)
       })
+      this.micropost.favorite_count--
+      this.micropost.is_favorite = 0
+      this.$emit('change-favorite-count', -1)
     }
   }
 }

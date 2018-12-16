@@ -66,10 +66,9 @@ export default {
       }
     }
   },
-  created () {
-    this.axios.get('/?req=ajax').then(res => {
-      this.data = res.data
-    })
+  async created () {
+    let res = await this.axios.get('/?req=ajax')
+    this.data = res.data
   },
   methods: {
     changeFavoriteCount (count) {

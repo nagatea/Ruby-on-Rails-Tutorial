@@ -8,6 +8,7 @@
 // layout file, like app/views/layouts/application.html.erb
 
 import Vue from 'vue/dist/vue.esm'
+import 'babel-polyfill'
 import 'bootstrap'
 import App from '../app.vue'
 import Home from '../components/Home.vue'

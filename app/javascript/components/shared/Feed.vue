@@ -53,14 +53,13 @@ export default {
     timeAgoInWords (date) {
       return timeAgo.format(new Date(date))
     },
-    removeMicropost (micropost) {
+    async removeMicropost (micropost) {
       let result = confirm('You sure?')
       if (!result) { return }
-      this.axios.delete('/microposts', {
+      await this.axios.delete('/microposts', {
         params: { id: micropost.id }
-      }).then(res => {
-        this.$emit('remove-micropost', micropost)
       })
+      this.$emit('remove-micropost', micropost)
     }
   }
 }

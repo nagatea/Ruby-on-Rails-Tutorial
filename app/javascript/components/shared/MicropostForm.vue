@@ -41,7 +41,7 @@ export default {
     }
   },
   methods: {
-    createMicropost () {
+    async createMicropost () {
       let formData = new FormData()
       formData.append('micropost[content]', this.content)
       formData.append('micropost[picture]', this.picture)
@@ -50,30 +50,27 @@ export default {
           'content-type': 'multipart/form-data'
         }
       }
+      let res = await this.axios.post(`/microposts`, formData, config)
 
-      this.axios.post(`/microposts`, formData, config)
-        .then((res) => {
-          let result = res.data
-          this.micropost.id = result.id
-          this.micropost.content = result.content
-          if (this.picture) {
-            this.micropost.picture = result.picture.url.match(/\d\/(.+)/i)[1]
-          }
-          this.micropost.user_id = this.user.id
-          this.micropost.created_at = result.created_at
-          this.micropost.updated_at = result.updated_at
-          this.micropost.user_name = this.user.name
-          this.micropost.user_email = this.user.email
-          this.micropost.user_admin = this.user.admin
-          this.$emit('add-micropost', JSON.parse(JSON.stringify(this.micropost)))
-        })
-        .then((res) => {
-          this.content = ''
-          this.picture = null
-          this.micropost.content = ''
-          this.micropost.picture = null
-          document.getElementById('micropost_picture').value = ''
-        })
+      let result = res.data
+      this.micropost.id = result.id
+      this.micropost.content = result.content
+      if (this.picture) {
+        this.micropost.picture = result.picture.url.match(/\d\/(.+)/i)[1]
+      }
+      this.micropost.user_id = this.user.id
+      this.micropost.created_at = result.created_at
+      this.micropost.updated_at = result.updated_at
+      this.micropost.user_name = this.user.name
+      this.micropost.user_email = this.user.email
+      this.micropost.user_admin = this.user.admin
+      this.$emit('add-micropost', JSON.parse(JSON.stringify(this.micropost)))
+
+      this.content = ''
+      this.picture = null
+      this.micropost.content = ''
+      this.micropost.picture = null
+      document.getElementById('micropost_picture').value = ''
     },
     postPicture () {
       let picture = this.$refs.picture.files[0]
