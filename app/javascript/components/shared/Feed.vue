@@ -56,9 +56,7 @@ export default {
     async removeMicropost (micropost) {
       let result = confirm('You sure?')
       if (!result) { return }
-      await this.axios.delete('/microposts', {
-        params: { id: micropost.id }
-      })
+      await this.axios.delete(`/microposts/${micropost.id}`)
       this.$emit('remove-micropost', micropost)
     }
   }

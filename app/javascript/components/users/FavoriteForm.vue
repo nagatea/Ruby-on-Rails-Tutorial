@@ -25,9 +25,7 @@ export default {
       this.$emit('change-favorite-count', 1)
     },
     async unfavorite () {
-      await this.axios.delete('/favorite_relationships', {
-        params: { id: this.micropost.favorite_relationships_id }
-      })
+      await this.axios.delete(`/favorite_relationships/${this.micropost.favorite_relationships_id}`)
       this.micropost.favorite_count--
       this.micropost.is_favorite = 0
       this.$emit('change-favorite-count', -1)
