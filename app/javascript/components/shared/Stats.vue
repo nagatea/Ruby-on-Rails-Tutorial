@@ -1,5 +1,5 @@
 <template>
-  <div v-if="user" class="stats">
+  <div class="stats">
     <a :href="`/users/${user.id}/following`">
       <strong id="following" class="stat">
         {{ followingCount }}
@@ -25,10 +25,22 @@
 export default {
   name: 'Stats',
   props: {
-    user: Object,
-    followingCount: Number,
-    followersCount: Number,
-    favoritesCount: Number
+    user: {
+      type: Object,
+      required: true
+    },
+    followingCount: {
+      type: Number,
+      required: true
+    },
+    followersCount: {
+      type: Number,
+      required: true
+    },
+    favoritesCount: {
+      type: Number,
+      required: true
+    }
   }
 }
 </script>

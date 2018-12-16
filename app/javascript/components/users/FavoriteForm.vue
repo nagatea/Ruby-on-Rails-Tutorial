@@ -8,7 +8,12 @@
 <script>
 export default {
   name: 'FavoriteForm',
-  props: ['micropost'],
+  props: {
+    micropost: {
+      type: Object,
+      required: true
+    }
+  },
   methods: {
     favorite () {
       this.axios.post('/favorite_relationships', {

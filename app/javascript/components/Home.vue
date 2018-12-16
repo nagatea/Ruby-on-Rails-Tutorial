@@ -54,7 +54,10 @@ export default {
   data () {
     return {
       data: {
-        user: {},
+        currentUser: {
+          name: '',
+          email: ''
+        },
         micropostCount: 0,
         followingCount: 0,
         followersCount: 0,

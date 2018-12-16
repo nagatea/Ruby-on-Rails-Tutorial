@@ -1,5 +1,5 @@
 <template>
-  <div v-if="feedItems[0]">
+  <div v-if="feedItems.length">
     <ol class="microposts">
       <li v-for="micropost in feedItems" :key="micropost.id" :id="`micropost-${micropost.id}`">
         <gravatar
@@ -40,9 +40,14 @@ export default {
     FavoriteForm
   },
   props: {
-    currentUser: Object,
-    feedItems: Array,
-    isFavoriteItems: Array
+    currentUser: {
+      type: Object,
+      required: true
+    },
+    feedItems: {
+      type: Array,
+      default: []
+    }
   },
   methods: {
     timeAgoInWords (date) {

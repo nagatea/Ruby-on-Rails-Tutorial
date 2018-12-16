@@ -14,7 +14,12 @@
 <script>
 export default {
   name: 'MicropostForm',
-  props: ['user'],
+  props: {
+    user: {
+      type: Object,
+      required: true
+    }
+  },
   data () {
     return {
       content: '',
