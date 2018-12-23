@@ -67,7 +67,13 @@ export default {
     }
   },
   async created () {
-    let res = await this.axios.get('/?req=ajax')
+    let query
+    if (location.search) {
+      query = `/${location.search}&req=ajax`
+    } else {
+      query = '/?req=ajax'
+    }
+    let res = await this.axios.get(query)
     this.data = res.data
   },
   methods: {
