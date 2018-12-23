@@ -11,7 +11,7 @@
         </span>
         <span class="content">
           {{ micropost.content }}
-          <img v-if="micropost.picture" :src="`/uploads/micropost/picture/${micropost.id}/${micropost.picture}`">
+          <img v-if="micropost.picture" :src="micropostImageSrc(micropost)">
         </span>
         <span class="timestamp">
           <favorite-form 
@@ -52,6 +52,9 @@ export default {
   methods: {
     timeAgoInWords (date) {
       return timeAgo.format(new Date(date))
+    },
+    micropostImageSrc (micropost) {
+      return `/uploads/micropost/picture/${micropost.id}/${micropost.picture}`
     },
     async removeMicropost (micropost) {
       let result = confirm('You sure?')

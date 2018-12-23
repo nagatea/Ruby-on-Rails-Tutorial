@@ -25,7 +25,6 @@ class User < ApplicationRecord
     relationships = Relationship.arel_table
     microposts = Micropost.arel_table
     favorite_relationships = FavoriteRelationship.arel_table
-    fav = FavoriteRelationship.arel_table.alias('fav')
     users = User.arel_table
     follower = relationships.project(relationships[:followed_id]).where(relationships[:follower_id].eq(id))
     microposts.project(microposts[Arel.star], favorite_relationships[:id].count.as('favorite_count'), users[:name].maximum.as('user_name'), users[:email].maximum.as('user_email'))
@@ -36,7 +35,7 @@ class User < ApplicationRecord
       .order(microposts[:created_at].desc)
   end
 
-  def feed_is_favorite
+  def favorite_feeds
     relationships = Relationship.arel_table
     microposts = Micropost.arel_table
     favorite_relationships = FavoriteRelationship.arel_table
@@ -66,6 +65,7 @@ class User < ApplicationRecord
 
   def favorite(micropost)
     favorite_microposts << micropost
+    favorite_relationships.last.id
   end
 
   def unfavorite(micropost)

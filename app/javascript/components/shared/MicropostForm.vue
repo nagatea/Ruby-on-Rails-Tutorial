@@ -75,7 +75,8 @@ export default {
     postPicture () {
       let picture = this.$refs.picture.files[0]
       if (picture) {
-        if (picture.size /1024 / 1024 > 5) {
+        let pictureSize = picture.size / 1024 / 1024
+        if (pictureSize > 5) {
           alert('Maximum file size is 5MB. Please choose a smaller file.')
         } else {
           this.picture = picture

@@ -3,9 +3,8 @@ class FavoriteRelationshipsController < ApplicationController
   
   def create
     @micropost = Micropost.select("microposts.*, COUNT(favorite_relationships.id) AS favorite_count").joins("LEFT JOIN favorite_relationships ON microposts.id = favorite_relationships.micropost_id").group("microposts.id").find(params[:micropost_id])
-    current_user.favorite(@micropost)
+    id = current_user.favorite(@micropost)
     @micropost.favorite_count += 1
-    id = FavoriteRelationship.last.id
     res = {
       favorite_relationships_id: id
     }
