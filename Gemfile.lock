@@ -252,6 +252,8 @@ GEM
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     ipaddress (0.8.3)
+    jb (0.6.0)
+      multi_json
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
@@ -420,6 +422,7 @@ DEPENDENCIES
   fog (= 1.42)
   guard (= 2.13.0)
   guard-minitest (= 2.4.4)
+  jb
   jbuilder (= 2.7.0)
   jquery-rails
   jquery-ui-rails

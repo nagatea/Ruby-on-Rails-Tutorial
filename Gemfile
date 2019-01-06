@@ -46,6 +46,9 @@ gem 'mini_magick', '4.7.0'
 # Use webpack for rails
 gem 'webpacker'
 
+# Use jb for rendering to json
+gem 'jb'
+
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3', '1.3.13'
