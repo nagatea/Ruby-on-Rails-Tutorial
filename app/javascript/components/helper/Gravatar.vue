@@ -19,9 +19,6 @@ export default {
       default: 80
     }
   },
-  computed: {
-    
-  },
   methods: {
     gravaterUrl (user, size) {
       const gravatarId = this.createMD5Hash(this.user.email)

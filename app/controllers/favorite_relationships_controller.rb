@@ -15,7 +15,7 @@ class FavoriteRelationshipsController < ApplicationController
   end
 
   def destroy
-    unfavorite_micropost = FavoriteRelationship.find(params[:id]).micropost
+    unfavorite_micropost = FavoriteRelationship.where("user_id = ? AND micropost_id = ?", current_user.id, params[:id].to_i).first.micropost
     current_user.unfavorite(unfavorite_micropost)
     @micropost = Micropost.select("microposts.*, COUNT(favorite_relationships.id) AS favorite_count").joins("LEFT JOIN favorite_relationships ON microposts.id = favorite_relationships.micropost_id").group("microposts.id").where("microposts.id = ?", unfavorite_micropost.id).first
     respond_to do |format|

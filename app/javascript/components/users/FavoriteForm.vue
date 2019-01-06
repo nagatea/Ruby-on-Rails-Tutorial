@@ -1,6 +1,6 @@
 <template>
   <div :id="`favorite_form-${micropost.id}`">
-    <input v-if="micropost.is_favorite" type='button' name='commit' :value="favoriteCount" class='favorite' :data-disable-with="favoriteCount" @click='cancelFavorite'>
+    <input v-if="micropost.favorite_relationships_id" type='button' name='commit' :value="favoriteCount" class='favorite' :data-disable-with="favoriteCount" @click='cancelFavorite'>
     <input v-else type='button' name='commit' :value="favoriteCount" class='non-favorite' :data-disable-with="favoriteCount" @click='favorite'>
   </div>
 </template>
@@ -26,13 +26,12 @@ export default {
       })
       this.micropost.favorite_relationships_id = res.data.favorite_relationships_id
       this.micropost.favorite_count++
-      this.micropost.is_favorite = 1
       this.$emit('change-favorite-count', 1)
     },
     async cancelFavorite () {
-      await this.axios.delete(`/favorite_relationships/${this.micropost.favorite_relationships_id}`)
+      await this.axios.delete(`/favorite_relationships/${this.micropost.id}`)
       this.micropost.favorite_count--
-      this.micropost.is_favorite = 0
+      this.micropost.favorite_relationships_id = null
       this.$emit('change-favorite-count', -1)
     }
   }

@@ -35,7 +35,6 @@ export default {
         user_name: "",
         user_email: "",
         user_admin: "",
-        is_favorite: 0,
         favorite_relationships_id: null
       }
     }

@@ -6,9 +6,18 @@ class StaticPagesController < ApplicationController
       user_res.delete('password_digest')
       @micropost = current_user.microposts.build
       @feed_items = Micropost.paginate_by_sql(@user.feed.to_sql, page: params[:page])
-      favorite_items = Micropost.paginate_by_sql(@user.favorite_feeds.to_sql, page: params[:page])
-      items = @feed_items + favorite_items
-      items_res = items.group_by { |item| item['id'] }.values.map{ |item| item[0].attributes.merge(item[1].attributes)}
+      items_res = []
+      @feed_items.each do |item|
+        favorite_relationships = item.favorite_relationships.find_by(user_id: @user.id)
+        if favorite_relationships
+          favorite_relationships_id = favorite_relationships.id
+        else
+          favorite_relationships_id = nil
+        end
+        item_hash = item.attributes
+        item_hash["favorite_relationships_id"] = favorite_relationships_id
+        items_res << item_hash
+      end
 
       res = {
         currentUser: user_res,
