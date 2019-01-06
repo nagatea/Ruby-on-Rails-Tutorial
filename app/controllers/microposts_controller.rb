@@ -8,7 +8,7 @@ class MicropostsController < ApplicationController
       res = @micropost.to_json
       respond_to do |format|
         format.html { redirect_to root_url }
-        format.json { render :json => res }
+        format.json { render json: res }
       end
     else
       @user = current_user

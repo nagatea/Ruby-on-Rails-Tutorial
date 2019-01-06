@@ -10,12 +10,12 @@ class FavoriteRelationshipsController < ApplicationController
     }
     respond_to do |format|
       format.html { redirect_to root_path }
-      format.json { render :json => res }
+      format.json { render json: res }
     end
   end
 
   def destroy
-    unfavorite_micropost = FavoriteRelationship.where("user_id = ? AND micropost_id = ?", current_user.id, params[:id].to_i).first.micropost
+    unfavorite_micropost = FavoriteRelationship.find_by(user_id: current_user.id, micropost_id: params[:id].to_i).micropost
     current_user.unfavorite(unfavorite_micropost)
     @micropost = Micropost.select("microposts.*, COUNT(favorite_relationships.id) AS favorite_count").joins("LEFT JOIN favorite_relationships ON microposts.id = favorite_relationships.micropost_id").group("microposts.id").where("microposts.id = ?", unfavorite_micropost.id).first
     respond_to do |format|

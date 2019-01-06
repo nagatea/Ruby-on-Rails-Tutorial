@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     async favorite () {
-      let res = await this.axios.post('/favorite_relationships', {
+      const res = await this.axios.post('/favorite_relationships', {
         micropost_id: this.micropost.id
       })
       this.micropost.favorite_relationships_id = res.data.favorite_relationships_id

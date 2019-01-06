@@ -41,17 +41,17 @@ export default {
   },
   methods: {
     async createMicropost () {
-      let formData = new FormData()
+      const formData = new FormData()
       formData.append('micropost[content]', this.content)
       formData.append('micropost[picture]', this.picture)
-      let config = {
+      const config = {
         headers: {
           'content-type': 'multipart/form-data'
         }
       }
-      let res = await this.axios.post(`/microposts`, formData, config)
+      const res = await this.axios.post(`/microposts`, formData, config)
 
-      let result = res.data
+      const result = res.data
       this.micropost.id = result.id
       this.micropost.content = result.content
       if (this.picture) {
@@ -72,9 +72,9 @@ export default {
       document.getElementById('micropost_picture').value = ''
     },
     postPicture () {
-      let picture = this.$refs.picture.files[0]
+      const picture = this.$refs.picture.files[0]
       if (picture) {
-        let pictureSize = picture.size / 1024 / 1024
+        const pictureSize = picture.size / 1024 / 1024
         if (pictureSize > 5) {
           alert('Maximum file size is 5MB. Please choose a smaller file.')
         } else {

@@ -71,7 +71,7 @@ export default {
     if (location.search) {
       query = `/${location.search}`
     }
-    let res = await this.axios.get(query)
+    const res = await this.axios.get(query)
     this.data = res.data
   },
   methods: {

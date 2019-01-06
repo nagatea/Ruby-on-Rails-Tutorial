@@ -57,7 +57,7 @@ export default {
       return `/uploads/micropost/picture/${micropost.id}/${micropost.picture}`
     },
     async removeMicropost (micropost) {
-      let result = confirm('You sure?')
+      const result = confirm('You sure?')
       if (!result) { return }
       await this.axios.delete(`/microposts/${micropost.id}`)
       this.$emit('remove-micropost', micropost)
