@@ -8,11 +8,17 @@
 // layout file, like app/views/layouts/application.html.erb
 
 import Vue from 'vue/dist/vue.esm'
-import App from '../app.vue'
+import 'babel-polyfill'
+import Home from '../components/Home.vue'
+import VueAxios from 'vue-axios'
+import axios from 'axios'
+axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
+axios.defaults.headers['X-CSRF-TOKEN'] = document.querySelector('meta[name=csrf-token]').content
+Vue.use(VueAxios, axios)
 
 new Vue({
-  el: '#app',
-  components: { 
-    App
-   }
+  el: '#home',
+  components: {
+    Home
+  }
 })
